@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Application\FizzBuzz.Application.Services\FizzBuzz.Application.Services.csproj" />
+    <ProjectReference Include="..\..\Domain\FizzBuzz.Domain.Entities\FizzBuzz.Domain.Entities.csproj" />
+    <ProjectReference Include="..\..\Domain\FizzBuzz.Domain.Interfaces\FizzBuzz.Domain.Interfaces.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\FizzBuzz.Infrastructure.Repositories\FizzBuzz.Infrastructure.Repositories.csproj" />
+  </ItemGroup>
+
+
+</Project>

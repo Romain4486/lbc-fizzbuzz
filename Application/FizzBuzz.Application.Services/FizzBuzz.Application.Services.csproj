@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Domain\FizzBuzz.Domain.Entities\FizzBuzz.Domain.Entities.csproj" />
+    <ProjectReference Include="..\..\Domain\FizzBuzz.Domain.Interfaces\FizzBuzz.Domain.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>
