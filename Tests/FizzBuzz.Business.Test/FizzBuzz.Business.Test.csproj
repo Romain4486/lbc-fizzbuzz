@@ -13,4 +13,10 @@
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Application\FizzBuzz.Application.Services\FizzBuzz.Application.Services.csproj" />
+    <ProjectReference Include="..\..\Domain\FizzBuzz.Domain.Entities\FizzBuzz.Domain.Entities.csproj" />
+    <ProjectReference Include="..\..\Domain\FizzBuzz.Domain.Interfaces\FizzBuzz.Domain.Interfaces.csproj" />
+  </ItemGroup>
+
 </Project>
