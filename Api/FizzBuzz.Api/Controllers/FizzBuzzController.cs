@@ -1,4 +1,5 @@
-﻿using FizzBuzz.Domain.Interfaces;
+﻿using FizzBuzz.Domain.Entities;
+using FizzBuzz.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,15 +26,21 @@ namespace FizzBuzz.Api.Controllers
 
         [AllowAnonymous]
         [HttpGet("v1/fizzbuzz/{fizzNumber}/{buzzNumber}/{limit}/{fizzLabel}/{buzzLabel}")]
-        public ActionResult<List<string>> FizzBuzzComputing(int fizzNumber, int buzzNumber, int limit, string fizzLabel, string buzzLabel)
+        public async Task<ActionResult<List<string>>> FizzBuzzComputing(int fizzNumber = 3, int buzzNumber = 5, int limit = 100, string fizzLabel = "Fizz", string buzzLabel = "Buzz")
         {
             try
             {
-                return new List<string>();
+                FizzBuzzModel fizzBuzzModel = new FizzBuzzModel() { FizzNumber = fizzNumber, BuzzNumber = buzzNumber, Limit = limit, FizzLabel = fizzLabel, BuzzLabel = buzzLabel };
+                return await _fizzBuzzService.ComputeSequence(fizzBuzzModel);
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError($"Unable to compute FizzBuzz for those parameters (fizzNumber : {fizzNumber} buzzNumber : {buzzNumber} limit : {limit} fizzLabel : {fizzLabel} buzzLabel : {buzzLabel}", ex);
+                return StatusCode(StatusCodes.Status400BadRequest, string.Empty);
             }
             catch (Exception ex)
             {
-                _logger.LogError("Unable to compute FizzBuzz", ex);
+                _logger.LogError($"Unable to compute FizzBuzz for those parameters (fizzNumber : {fizzNumber} buzzNumber : {buzzNumber} limit : {limit} fizzLabel : {fizzLabel} buzzLabel : {buzzLabel}", ex);
                 return StatusCode(StatusCodes.Status500InternalServerError, string.Empty);
             }
         }
