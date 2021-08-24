@@ -11,9 +11,14 @@ namespace FizzBuzz.Application.Services
 {
     public class FizzBuzzService : IFizzBuzzService
     {
-        public FizzBuzzService()
+        private readonly ILogger<FizzBuzzService> _logger;
+        private readonly IFizzBuzzRepository _fizzBuzzRepository;
+        public FizzBuzzService(ILogger<FizzBuzzService> logger, IFizzBuzzRepository fizzBuzzRepository)
         {
+            _logger = logger;
+            _fizzBuzzRepository = fizzBuzzRepository;
         }
+
         public async Task<List<string>> ComputeSequence(FizzBuzzModel fizzBuzzModel)
         {
             var context = new ValidationContext(fizzBuzzModel, serviceProvider: null, items: null);
@@ -29,6 +34,10 @@ namespace FizzBuzz.Application.Services
                 var numberComputed = await ComputeNumber(i, fizzBuzzModel);
                 lst.Add(numberComputed);
             }
+
+            var insertIsOK = await _fizzBuzzRepository.InsertFizzBuzz(fizzBuzzModel);
+            if (!insertIsOK)
+                _logger.LogError($"Unable to insert the fizzBuzz metric for those parameters (fizzNumber : {fizzBuzzModel.FizzNumber} buzzNumber : {fizzBuzzModel.BuzzNumber} limit : {fizzBuzzModel.Limit} fizzLabel : {fizzBuzzModel.FizzLabel} buzzLabel : {fizzBuzzModel.BuzzLabel}");
 
             return lst;
         }

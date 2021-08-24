@@ -1,6 +1,8 @@
+using FizzBuzz.Application.Services;
 using FizzBuzz.Domain.Entities;
 using FizzBuzz.Domain.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Threading.Tasks;
 
@@ -13,9 +15,10 @@ namespace FizzBuzz.Business.Test
 
         public FizzBuzzServiceTest()
         {
-            _fizzBuzzService = new Application.Services.FizzBuzzService();
+            var _fizzBuzzRepositoryMock = new Mock<IFizzBuzzRepository>();
+            _fizzBuzzRepositoryMock.Setup(fb => fb.InsertFizzBuzz(It.IsAny<FizzBuzzModel>())).Returns(Task.FromResult(true));
+            _fizzBuzzService = new FizzBuzzService(null, _fizzBuzzRepositoryMock.Object);
         }
-
 
         [TestMethod]
         public async Task GoodScenario()

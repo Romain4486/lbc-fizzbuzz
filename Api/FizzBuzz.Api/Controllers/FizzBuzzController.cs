@@ -17,11 +17,13 @@ namespace FizzBuzz.Api.Controllers
     {
         private readonly ILogger<FizzBuzzController> _logger;
         private readonly IFizzBuzzService _fizzBuzzService;
+        private readonly IFizzBuzzRepository _fizzBuzzRepository;
 
-        public FizzBuzzController(ILogger<FizzBuzzController> logger,IFizzBuzzService fizzBuzzService)
+        public FizzBuzzController(ILogger<FizzBuzzController> logger, IFizzBuzzService fizzBuzzService, IFizzBuzzRepository fizzBuzzRepository)
         {
             _logger = logger;
             _fizzBuzzService = fizzBuzzService;
+            _fizzBuzzRepository = fizzBuzzRepository;
         }
 
         [AllowAnonymous]
@@ -41,6 +43,21 @@ namespace FizzBuzz.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Unable to compute FizzBuzz for those parameters (fizzNumber : {fizzNumber} buzzNumber : {buzzNumber} limit : {limit} fizzLabel : {fizzLabel} buzzLabel : {buzzLabel}", ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, string.Empty);
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("v1/fizzbuzz/stats")]
+        public async Task<ActionResult<FizzBuzzModel>> GetMaxCallsOfFizzBuzz()
+        {
+            try
+            {
+                return await _fizzBuzzRepository.GetFizzBuzzMaxCalls();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Unable to get stats", ex);
                 return StatusCode(StatusCodes.Status500InternalServerError, string.Empty);
             }
         }

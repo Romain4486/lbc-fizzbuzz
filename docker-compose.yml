@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  database:
+    image: "postgres"
+    ports:
+      - "5431:5432"
+    environment:
+      - POSTGRES_USER=user_metrics
+      - POSTGRES_PASSWORD=azerty
+      - POSTGRES_DB=metrics_database
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+      - ./dbscripts/seed.sql :/docker-entrypoint-initdb.d/seed.sql
+    networks:
+      - frontend
+
+networks:
+  frontend:
+
+volumes:
+  database-data:

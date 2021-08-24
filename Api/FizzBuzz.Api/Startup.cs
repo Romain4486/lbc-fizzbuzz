@@ -1,5 +1,7 @@
 using FizzBuzz.Application.Services;
+using FizzBuzz.Domain.Entities.Configs;
 using FizzBuzz.Domain.Interfaces;
+using FizzBuzz.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,8 +29,11 @@ namespace FizzBuzz.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<PgConfig>(Configuration.GetSection("Npg"));
             services.AddControllers();
             services.AddSingleton<IFizzBuzzService, FizzBuzzService>();
+            services.AddSingleton<IFizzBuzzRepository, FizzBuzzRepository>();
+            services.AddSingleton<IHealthCheckRepository, HealthCheckRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
