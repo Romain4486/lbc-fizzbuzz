@@ -20,8 +20,12 @@ namespace FizzBuzz.Api.Controllers
             _healthCheckRepository = healthCheckRepository;
         }
 
+        /// <summary>
+        /// Allow to have an entrypoint and a status about the API loading
+        /// </summary>
+        /// <returns>ok if the api is correctly hosted</returns>
         [Route("_system/check/simple")]
-        public async Task<ActionResult<string>> Get()
+        public ActionResult<string> Get()
         {
             try
             {
@@ -33,6 +37,10 @@ namespace FizzBuzz.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Allow to have an entrypoint and a status about the API loading and dependancies
+        /// </summary>
+        /// <returns>ok if the api/infrastructures are correctly hosted</returns>
         [Route("_system/check/full")]
         public async Task<ActionResult<string>> GetFullInfrastructureInformation()
         {

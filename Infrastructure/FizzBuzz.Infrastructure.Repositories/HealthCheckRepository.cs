@@ -18,6 +18,11 @@ namespace FizzBuzz.Infrastructure.Repositories
             _logger = logger;
             dbconnection = dbConfig.Value.ConnectionString;
         }
+
+        /// <summary>
+        /// Allow to know if the postgresql is up
+        /// </summary>
+        /// <returns>boolean true if postgresql is up unless false</returns>
         public async Task<bool> CheckDatabaseUp()
         {
             try

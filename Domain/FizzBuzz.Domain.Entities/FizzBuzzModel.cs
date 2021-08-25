@@ -8,6 +8,11 @@ namespace FizzBuzz.Domain.Entities
         public FizzBuzzModel()
         { }
 
+        /// <summary>
+        /// Allow to build a fizzbuzz model from the database
+        /// </summary>
+        /// <param name="primaryKey">use the primary key to fill all the properties of FizzBuzz model</param>
+        /// <param name="hits">number of hits compute for a dedicated sequence of fizzbuzz</param>
         public FizzBuzzModel(string primaryKey, int hits)
         {
             const int NB_PARAMETERS_TO_BUILD_FIZZBUZZ = 5;

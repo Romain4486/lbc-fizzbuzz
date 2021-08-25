@@ -1,6 +1,19 @@
 version: "3"
 
 services:
+  fizzbuzz:
+    build:
+      dockerfile: ./Dockerfile
+      context: ./
+    image: fizzbuzz:latest
+    user: app
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+    ports:
+      - 8080:5000
+    networks:
+      - frontend
+
   database:
     image: "postgres"
     ports:
@@ -15,8 +28,33 @@ services:
     networks:
       - frontend
 
+  prometheus:
+    image: prom/prometheus
+    restart: unless-stopped
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - frontend
+
+  grafana:
+    image: grafana/grafana
+    #command:
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    networks:
+      - frontend
+    volumes:
+      - grafana:/usr/share/grafana
+
 networks:
   frontend:
 
 volumes:
+  grafana:
   database-data:

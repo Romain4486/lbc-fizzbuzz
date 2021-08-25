@@ -21,6 +21,10 @@ namespace FizzBuzz.Infrastructure.Repositories
             dbconnection = dbConfig.Value.ConnectionString;
         }
 
+        /// <summary>
+        /// Allow to get the fizzbuzz sequence which is more called
+        /// </summary>
+        /// <returns>a fizzbuzz sequence</returns>
         public async Task<FizzBuzzModel> GetFizzBuzzMaxCalls()
         {
             FizzBuzzModel fbm = null;
@@ -55,6 +59,11 @@ namespace FizzBuzz.Infrastructure.Repositories
             }
         }
 
+        /// <summary>
+        /// Allow to insert all the fizzbuzz sequence in a dedicated database
+        /// </summary>
+        /// <param name="fizzBuzzModel">the fizzbuzz model currently called</param>
+        /// <returns>boolean to know if the sequence is correctly inserted or updated</returns>
         public async Task<bool> InsertFizzBuzz(FizzBuzzModel fizzBuzzModel)
         {
             try

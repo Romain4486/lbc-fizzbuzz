@@ -20,6 +20,10 @@ namespace FizzBuzz.Business.Test
             _fizzBuzzService = new FizzBuzzService(null, _fizzBuzzRepositoryMock.Object);
         }
 
+        /// <summary>
+        /// Test nominal scenario
+        /// </summary>
+        /// <returns></returns>
         [TestMethod]
         public async Task GoodScenario()
         {
@@ -29,6 +33,10 @@ namespace FizzBuzz.Business.Test
             Assert.AreEqual(expectedResult, string.Join(',', actualResult));
         }
 
+        /// <summary>
+        /// Test nominal scenario with same number for fizz and buzz
+        /// </summary>
+        /// <returns></returns>
         [TestMethod]
         public async Task GoodScenario_SameNumberForFizzAndBuzz()
         {
@@ -38,6 +46,10 @@ namespace FizzBuzz.Business.Test
             Assert.AreEqual(expectedResult, string.Join(',', actualResult));
         }
 
+        /// <summary>
+        /// Test error without buzz label set
+        /// </summary>
+        /// <returns></returns>
         [TestMethod]
         [ExpectedException(typeof(ArgumentException), "The BuzzLabel field is required.")]
 
@@ -47,6 +59,10 @@ namespace FizzBuzz.Business.Test
             await _fizzBuzzService.ComputeSequence(badRequest);
         }
 
+        /// <summary>
+        /// Test error without fizz label set
+        /// </summary>
+        /// <returns></returns>
         [TestMethod]
         [ExpectedException(typeof(ArgumentException), "The FizzLabel field is required.")]
 
@@ -56,6 +72,10 @@ namespace FizzBuzz.Business.Test
             await _fizzBuzzService.ComputeSequence(badRequest);
         }
 
+        /// <summary>
+        /// Test error with FizzNumber set to 0
+        /// </summary>
+        /// <returns></returns>
         [TestMethod]
         [ExpectedException(typeof(ArgumentException), "The field FizzNumber must be between 1 and 100.")]
 
@@ -65,15 +85,23 @@ namespace FizzBuzz.Business.Test
             await _fizzBuzzService.ComputeSequence(badRequest);
         }
 
+        /// <summary>
+        /// Test error with BuzzNumber set to 0
+        /// </summary>
+        /// <returns></returns>
         [TestMethod]
         [ExpectedException(typeof(ArgumentException), "The field BuzzNumber must be between 1 and 100.")]
 
         public async Task BadScenario_ZeroForBuzzNumber()
         {
-            var badRequest = new FizzBuzzModel() { FizzNumber = 0, BuzzNumber = 5, FizzLabel = "fizz", BuzzLabel = "buzz", Limit = 10 };
+            var badRequest = new FizzBuzzModel() { FizzNumber = 3, BuzzNumber = 0, FizzLabel = "fizz", BuzzLabel = "buzz", Limit = 10 };
             await _fizzBuzzService.ComputeSequence(badRequest);
         }
 
+        /// <summary>
+        /// Test error without limit
+        /// </summary>
+        /// <returns></returns>
         [TestMethod]
         [ExpectedException(typeof(ArgumentException), "The field Limit must be between 1 and 100.")]
 

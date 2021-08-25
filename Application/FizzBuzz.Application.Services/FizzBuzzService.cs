@@ -19,6 +19,11 @@ namespace FizzBuzz.Application.Services
             _fizzBuzzRepository = fizzBuzzRepository;
         }
 
+        /// <summary>
+        /// Compute the sequence of fizzbuzz from input parameters
+        /// </summary>
+        /// <param name="fizzBuzzModel">model of fizzbuzz built</param>
+        /// <returns>list of fizzbuzz sequence</returns>
         public async Task<List<string>> ComputeSequence(FizzBuzzModel fizzBuzzModel)
         {
             var context = new ValidationContext(fizzBuzzModel, serviceProvider: null, items: null);
